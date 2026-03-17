@@ -1,0 +1,23 @@
+export default function US6_CreatePage() {
+  return (
+    <section>
+      <h2>US6 – Create Page</h2>
+      <p>Form shell for creating a new content page.</p>
+      <form>
+        <div>
+          <label>Page title</label>
+          <input type="text" placeholder="Enter page title" />
+        </div>
+        <div>
+          <label>Slug / URL</label>
+          <input type="text" placeholder="/new-page" />
+        </div>
+        <div>
+          <label>Content</label>
+          <textarea rows={5} placeholder="Page body content..." />
+        </div>
+        <button type="button">Save (placeholder)</button>
+      </form>
+    </section>
+  );
+}
