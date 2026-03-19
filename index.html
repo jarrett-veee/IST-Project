@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Your Figma Page Title Here</h1>
+
+  <!-- Replace this with your Figma layout -->
+  <form id="form">
+    <input id="id" type="hidden">
+    <input id="name" placeholder="Name (required)">
+    <input id="desc" placeholder="Description">
+    <button type="submit">Save</button>
+  </form>
+
+  <div id="error" style="color:red"></div>
+
+  <ul id="list"></ul>
+
+  <script src="api.js"></script>
+  <script>
+    const list = document.getElementById("list");
+    const form = document.getElementById("form");
+    const id = document.getElementById("id");
+    const name = document.getElementById("name");
+    const desc = document.getElementById("desc");
+    const error = document.getElementById("error");
+
+    function render() {
+      list.innerHTML = "";
+      ItemApi.getItems().forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          ${item.name} - ${item.description}
+          <button onclick="edit('${item.id}')">Edit</button>
+          <button onclick="del('${item.id}')">Delete</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function edit(itemId) {
+      const item = ItemApi.getItems().find(i => i.id === itemId);
+      id.value = item.id;
+      name.value = item.name;
+      desc.value = item.description;
+    }
+
+    function del(itemId) {
+      ItemApi.deleteItem(itemId);
+      render();
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      error.textContent = "";
+      try {
+        if (id.value) {
+          ItemApi.updateItem(id.value, { name: name.value, description: desc.value });
+        } else {
+          ItemApi.createItem({ name: name.value, description: desc.value });
+        }
+        id.value = "";
+        name.value = "";
+        desc.value = "";
+        render();
+      } catch (err) {
+        error.textContent = err.message;
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
