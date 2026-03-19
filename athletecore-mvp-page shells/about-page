@@ -1,0 +1,11 @@
+export function AboutPage() {
+  return (
+    <div className="mx-auto max-w-3xl px-4 py-12 space-y-6">
+      <h1 className="text-3xl font-bold">About AthleteCore</h1>
+      <p className="text-gray-600">
+        AthleteCore creates premium athletic gear engineered for everyday athletes and professionals.
+      </p>
+      {/* Optional: timeline, values list, team photo placeholders */}
+    </div>
+  );
+}
